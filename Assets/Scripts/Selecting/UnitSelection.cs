@@ -10,11 +10,11 @@ using Zenject;
 
 namespace Selecting
 {
-    public class UnitSelection : MonoBehaviour
+    public class UnitSelection : IInitializable
     {
-        [SerializeField] private ISelector _selector;
-        [SerializeField] private ISelectingInput _selectingInput;
-        [SerializeField] private ISelectingAreaDrawer _selectingAreaDrawer;
+        private ISelector _selector;
+        private ISelectingInput _selectingInput;
+        private ISelectingAreaDrawer _selectingAreaDrawer;
         
         public IEnumerable<ISelectable> Selected { get; private set; } = new ISelectable[0];
         
@@ -25,24 +25,12 @@ namespace Selecting
             _selectingInput = selectingInput;
             _selectingAreaDrawer = selectingAreaDrawer;
         }
-
-        private void OnEnable()
+        
+        public void Initialize()
         {
             _selectingInput.Selecting += OnSelecting;
             _selectingInput.SelectingEnded += OnSelectingEnded;
         }
-        
-        private void OnDisable()
-        {
-            _selectingInput.Selecting -= OnSelecting;
-            _selectingInput.SelectingEnded -= OnSelectingEnded;
-        }
-
-        private void ClearSelected()
-        {
-            Selected = Enumerable.Empty<ISelectable>();
-        }
-    
 
         private void OnSelecting(Rect rect)
         {
@@ -66,6 +54,11 @@ namespace Selecting
             Selected = newSelected;
 
             _selectingAreaDrawer.StopDrawing();
+        }
+        
+        private void ClearSelected()
+        {
+            Selected = Enumerable.Empty<ISelectable>();
         }
     }
 }

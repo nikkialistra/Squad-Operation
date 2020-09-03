@@ -1,28 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Selecting.Repositories;
 using Units;
 using UnityEngine;
 
 namespace Selecting.Selectors
 {
-    public class ProjectionSelector : MonoBehaviour, ISelector
+    public class ProjectionSelector : ISelector
     {
-        [SerializeField] private Camera _camera;
-        [SerializeField] private string _objectTag = "Selectable";
+        private readonly IUnitRepository _unitRepository;
+        private readonly Camera _camera;
 
-        private List<GameObject> _gameObjects;
+        private IEnumerable<Unit> _gameObjects;
 
-        private void Start()
+        ProjectionSelector(IUnitRepository unitRepository, Camera camera)
         {
-            GetObjectsByTag();
-        }
-
-        public void GetObjectsByTag()
-        {
-            _gameObjects = new List<GameObject>(GameObject.FindGameObjectsWithTag(_objectTag));
+            _unitRepository = unitRepository;
+            _camera = camera;
         }
 
         public IEnumerable<ISelectable> SelectInScreenSpace(Rect rect)
         {
+            _gameObjects = _unitRepository.GetObjects();
+            
+            if (_gameObjects == null)
+                throw new NullReferenceException();
+            
             foreach (var gameObject in _gameObjects)
             {
                 if (gameObject.GetComponent<ISelectable>() != null)

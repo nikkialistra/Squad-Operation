@@ -4,8 +4,8 @@ namespace Selecting.Drawers
 {
     public class UiDrawer : ISelectingAreaDrawer
     {
-        private RectTransform _selectionRect;
-        private GameObject _selectionGameObject;
+        private readonly RectTransform _selectionRect;
+        private readonly GameObject _selectionGameObject;
 
         UiDrawer(RectTransform selectionRect)
         {

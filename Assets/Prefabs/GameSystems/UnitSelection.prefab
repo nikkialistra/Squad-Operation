@@ -9,8 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6974189673303210070}
-  - component: {fileID: 6974189673303210069}
-  - component: {fileID: 1800684061065292341}
   - component: {fileID: 2024458915628598477}
   m_Layer: 0
   m_Name: UnitSelection
@@ -33,32 +31,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6974189673303210069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6974189673303210071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00c6417b6ab5432ea3b9f88417b5e726, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1800684061065292341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6974189673303210071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51e53322c9114d1f81c9e91254c862c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _camera: {fileID: 0}
-  _objectTag: Selectable
 --- !u!114 &2024458915628598477
 MonoBehaviour:
   m_ObjectHideFlags: 0
