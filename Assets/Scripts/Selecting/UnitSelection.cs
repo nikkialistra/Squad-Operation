@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Selecting.Drawers;
@@ -39,19 +39,22 @@ namespace Selecting
 
         private void OnSelectingEnded(Rect rect)
         {
-            var newSelected = _selector.SelectInScreenSpace(rect);
+            var newSelected = Enumerable.Empty<ISelectable>();
+            if (rect.size != Vector2.zero)
+                newSelected = _selector.SelectInScreenSpace(rect);
 
-            foreach (var willDeselect in Selected.Except(newSelected))
+            var newSelectedArray = newSelected as ISelectable[] ?? newSelected.ToArray();
+            foreach (var willDeselect in Selected.Except(newSelectedArray))
             {
                 willDeselect.OnDeselect();
             }
 
-            foreach (var selected in newSelected)
+            foreach (var selected in newSelectedArray)
             {
                 selected.OnSelect();
             }
 
-            Selected = newSelected;
+            Selected = newSelectedArray;
 
             _selectingAreaDrawer.StopDrawing();
         }

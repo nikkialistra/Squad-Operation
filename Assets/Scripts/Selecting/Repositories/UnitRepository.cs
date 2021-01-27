@@ -6,9 +6,13 @@ namespace Selecting.Repositories
 {
     public class UnitRepository : MonoBehaviour, IUnitRepository
     {
+        private IEnumerable<Unit> _gameObjects;
+        
         public IEnumerable<Unit> GetObjects()
         {
-            return GameObject.FindObjectsOfType<Unit>();
+            if (_gameObjects == null)
+                _gameObjects = GameObject.FindObjectsOfType<Unit>();
+            return _gameObjects;
         }
     }
 }
