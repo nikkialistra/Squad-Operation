@@ -1,32 +1,56 @@
 ﻿using System;
+using Controls;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Selecting.SelectingInputs
 {
-    public class PCSelectingInput : MonoBehaviour, ISelectingInput
+    public class SelectingInput : MonoBehaviour, ISelectingInput
     {
         public event Action<Rect> Selecting;
         public event Action<Rect> SelectingEnded;
 
+        private Control _control;
+
         private Vector2? _startPoint;
+
+        private void Awake()
+        {
+            _control = new Control();
+
+            MakeControlBindings();
+        }
+
+        private void MakeControlBindings()
+        {
+            _control.Selection.Start.performed += SelectionStarted;
+            _control.Selection.Finish.performed += SelectionEnded;
+        }
+        
+        private void SelectionStarted(InputAction.CallbackContext context)
+        {
+            StartArea(_control.Selection.Position.ReadValue<Vector2>());
+        }
+        
+        private void SelectionEnded(InputAction.CallbackContext context)
+        {
+            EndArea(_control.Selection.Position.ReadValue<Vector2>());
+        }
+
+        private void OnEnable()
+        {
+            _control.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _control.Disable();
+        }
 
         private void Update()
         {
-            if (Input.GetKey(KeyCode.LeftControl) == false)
-            {
-                if (_startPoint == null)
-                {
-                    if (Input.GetMouseButtonDown(0))
-                        StartArea(GetScreenSpaceMousePosition());
-                }
-                else
-                {
-                    if (Input.GetMouseButton(0))
-                        UpdateArea(GetScreenSpaceMousePosition());
-                    if (Input.GetMouseButtonUp(0))
-                        EndArea(GetScreenSpaceMousePosition());
-                }
-            }
+            if (_startPoint != null)
+                UpdateArea(_control.Selection.Position.ReadValue<Vector2>());
         }
 
         private void StartArea(Vector2 screenPoint)
@@ -50,11 +74,6 @@ namespace Selecting.SelectingInputs
             SelectingEnded?.Invoke(GetRect(_startPoint.Value, screenPoint));
             
             _startPoint = null;
-        }
-
-        private Vector2 GetScreenSpaceMousePosition()
-        {
-            return new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         }
         
         private Rect GetRect(Vector2 a, Vector2 b)

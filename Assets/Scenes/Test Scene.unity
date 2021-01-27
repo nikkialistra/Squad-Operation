@@ -4815,7 +4815,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &985666788
 Transform:
@@ -4930,7 +4930,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!108 &1024319088
 Light:
@@ -5877,7 +5877,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 188851060283894334, guid: 6483e4dbb3178ba41b06fde9da6b3608, type: 3}
       propertyPath: m_Name
-      value: RegularUnit
+      value: RegularUnit 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6483e4dbb3178ba41b06fde9da6b3608, type: 3}
@@ -6567,7 +6567,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 188851060283894334, guid: 6483e4dbb3178ba41b06fde9da6b3608, type: 3}
       propertyPath: m_Name
-      value: RegularUnit
+      value: RegularUnit 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6483e4dbb3178ba41b06fde9da6b3608, type: 3}
@@ -8608,7 +8608,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 188851060283894334, guid: 6483e4dbb3178ba41b06fde9da6b3608, type: 3}
       propertyPath: m_Name
-      value: RegularUnit (2)
+      value: RegularUnit 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6483e4dbb3178ba41b06fde9da6b3608, type: 3}
@@ -8665,7 +8665,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 188851060283894334, guid: 6483e4dbb3178ba41b06fde9da6b3608, type: 3}
       propertyPath: m_Name
-      value: RegularUnit (1)
+      value: RegularUnit 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6483e4dbb3178ba41b06fde9da6b3608, type: 3}
@@ -8896,8 +8896,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unitRepository: {fileID: 4659231785623947166, guid: b744ce19e10a577489b5f1bbf2afaecb, type: 3}
   _unitSelection: {fileID: 6974189673303210071, guid: cb9509668846b0849a433c01c1d6afc8, type: 3}
-  _usePhysics3DSelector: 1
-  _physics3DSelector: {fileID: 7866902945001911203, guid: 53c0a80c1a0ce4049be961fb0ff90820, type: 3}
+  _usePhysics3DSelector: 0
   _camera: {fileID: 2018271276}
   _selectionRect: {fileID: 1825391492}
   _uiCanvas: {fileID: 674895032}
@@ -9221,8 +9220,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2018271272}
-  m_LocalRotation: {x: -0.4094106, y: -0.0021939278, z: 0.0009789243, w: -0.91234714}
-  m_LocalPosition: {x: -2.5276227, y: 11.197735, z: -10.7429905}
+  m_LocalRotation: {x: -0.3854361, y: 0.31528145, z: -0.1420538, w: -0.85548663}
+  m_LocalPosition: {x: 5.72848, y: 11.818891, z: -5.4381824}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

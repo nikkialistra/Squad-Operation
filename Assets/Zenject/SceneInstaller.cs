@@ -26,7 +26,7 @@ namespace Zenject
             Container.BindInterfacesTo<UnitSelection>().AsSingle().NonLazy();
 
             Container.BindInstance(_camera).AsSingle();
-            
+
             if (_usePhysics3DSelector)
                 Container.Bind<ISelector>().To<Physics3DSelector>().AsSingle().WithArguments(_camera);
             else
@@ -34,7 +34,7 @@ namespace Zenject
             
             Container.Bind<IUnitRepository>().To<UnitRepository>().FromComponentInNewPrefab(_unitRepository).AsSingle();
             
-            Container.Bind<ISelectingInput>().To<PCSelectingInput>().FromComponentInNewPrefab(_unitSelection).AsSingle();
+            Container.Bind<ISelectingInput>().To<SelectingInput>().FromComponentInNewPrefab(_unitSelection).AsSingle();
             Container.Bind<ISelectingAreaDrawer>().To<UiDrawer>().AsSingle().WithArguments(_selectionRect, _uiCanvas);
         }
     }
