@@ -9155,6 +9155,7 @@ GameObject:
   - component: {fileID: 2018271277}
   - component: {fileID: 2018271276}
   - component: {fileID: 2018271273}
+  - component: {fileID: 2018271274}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -9170,6 +9171,30 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2018271272}
   m_Enabled: 1
+--- !u!114 &2018271274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018271272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 329f400508d0406e9e792814a7fa4060, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 2018271276}
+  _cameraTransform: {fileID: 2018271277}
+  _movementNormalSpeed: 5
+  _movementFastSpeed: 10
+  _rotationAmount: 3
+  _mouseRotationMultiplier: 3
+  _zoomAmount: {x: 1, y: 1, z: 1}
+  _mouseZoomMultiplier: 3
+  _movementTime: 1
+  _rotationTime: 1
+  _zoomTime: 1
+  followTransform: {fileID: 0}
 --- !u!20 &2018271276
 Camera:
   m_ObjectHideFlags: 0

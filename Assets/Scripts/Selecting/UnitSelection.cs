@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Selecting.Drawers;
-using Selecting.SelectingInputs;
 using Selecting.Selectors;
 using Units;
 using UnityEngine;
@@ -13,13 +10,13 @@ namespace Selecting
     public class UnitSelection : IInitializable
     {
         private ISelector _selector;
-        private ISelectingInput _selectingInput;
-        private ISelectingAreaDrawer _selectingAreaDrawer;
+        private SelectingInput _selectingInput;
+        private UiDrawer _selectingAreaDrawer;
         
         public IEnumerable<ISelectable> Selected { get; private set; } = new ISelectable[0];
         
         [Inject]
-        public void Construct(ISelector selector, ISelectingInput selectingInput, ISelectingAreaDrawer selectingAreaDrawer)
+        public void Construct(ISelector selector, SelectingInput selectingInput, UiDrawer selectingAreaDrawer)
         {
             _selector = selector;
             _selectingInput = selectingInput;

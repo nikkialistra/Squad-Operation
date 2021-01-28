@@ -1,8 +1,6 @@
 using UnityEngine;
 using Selecting;
-using Selecting.Drawers;
 using Selecting.Repositories;
-using Selecting.SelectingInputs;
 using Selecting.Selectors;
 
 namespace Zenject
@@ -11,7 +9,7 @@ namespace Zenject
     {
         [Header("Services")] 
         [SerializeField] private Object _unitRepository;
-        [SerializeField] private Object _unitSelection;
+        [SerializeField] private Object _selectingInput;
 
         [Header("Selector (projection by default)")] 
         [SerializeField] private bool _usePhysics3DSelector;
@@ -34,8 +32,8 @@ namespace Zenject
             
             Container.Bind<IUnitRepository>().To<UnitRepository>().FromComponentInNewPrefab(_unitRepository).AsSingle();
             
-            Container.Bind<ISelectingInput>().To<SelectingInput>().FromComponentInNewPrefab(_unitSelection).AsSingle();
-            Container.Bind<ISelectingAreaDrawer>().To<UiDrawer>().AsSingle().WithArguments(_selectionRect, _uiCanvas);
+            Container.Bind<SelectingInput>().FromComponentInNewPrefab(_selectingInput).AsSingle();
+            Container.Bind<UiDrawer>().AsSingle().WithArguments(_selectionRect, _uiCanvas);
         }
     }
 }

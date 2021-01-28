@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Selecting.Drawers
+namespace Selecting
 {
-    public class UiDrawer : ISelectingAreaDrawer
+    public class UiDrawer
     {
         private readonly RectTransform _selectionRect;
         private readonly GameObject _selectionGameObject;
