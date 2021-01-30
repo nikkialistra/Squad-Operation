@@ -10,8 +10,11 @@ namespace Zenject
     public class SceneInstaller : MonoInstaller
     {
         [Header("Services")] 
-        [SerializeField] private Object _unitRepository;
-        [SerializeField] private Object _selectingInput;
+        [SerializeField] private UnitRepository _unitRepository;
+        [SerializeField] private SelectingInput _selectingInput;
+
+        [SerializeField] private SaveManager _saveManager;
+        [SerializeField] private GameEvents _gameEvents;
 
         [Header("Selector (projection by default)")] 
         [SerializeField] private bool _usePhysics3DSelector;
@@ -23,18 +26,18 @@ namespace Zenject
 
         public override void InstallBindings()
         {
+            Container.BindInstance(_camera).AsSingle();
+            
             Container.BindInterfacesTo<UnitSelection>().AsSingle().NonLazy();
 
-            Container.BindInstance(_camera).AsSingle();
-
             if (_usePhysics3DSelector)
-                Container.Bind<ISelector>().To<Physics3DSelector>().AsSingle().WithArguments(_camera);
+                Container.Bind<ISelector>().To<Physics3DSelector>().AsSingle();
             else
-                Container.Bind<ISelector>().To<ProjectionSelector>().AsSingle().WithArguments(_camera);
+                Container.Bind<ISelector>().To<ProjectionSelector>().AsSingle();
+
+            Container.Bind<IUnitRepository>().FromInstance(_unitRepository);
+            Container.BindInstance(_selectingInput);
             
-            Container.Bind<IUnitRepository>().To<UnitRepository>().FromComponentInNewPrefab(_unitRepository).AsSingle();
-            
-            Container.Bind<SelectingInput>().FromComponentInNewPrefab(_selectingInput).AsSingle();
             Container.Bind<UiDrawer>().AsSingle().WithArguments(_selectionRect, _uiCanvas);
         }
     }
