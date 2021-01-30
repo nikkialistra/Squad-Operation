@@ -10,27 +10,25 @@ namespace CameraControllers
     [RequireComponent(typeof(Camera))]
     public class CameraController : MonoBehaviour
     {
-        [Header("Movement")]
-        [SerializeField] private float _movementNormalSpeed;
+        [Header("Movement")] [SerializeField] private float _movementNormalSpeed;
         [SerializeField] private float _movementFastSpeed;
         [SerializeField] private float _dragMultiplier;
 
-        [Header("Rotation")]
-        [SerializeField] private float _steppedRotationAmount;
+        [Header("Rotation")] [SerializeField] private float _steppedRotationAmount;
         [SerializeField] private float _touchRotationMultiplier;
 
-        [Header("Zoom")]
-        [SerializeField] private Vector3 _zoomAmount;
+        [Header("Zoom")] [SerializeField] private Vector3 _zoomAmount;
         [SerializeField] private float _zoomMultiplier;
 
-        [Header("Multipliers")]
-        [SerializeField] private float _movementTime;
+        [Header("Multipliers")] [SerializeField]
+        private float _movementTime;
+
         [SerializeField] private float _rotationTime;
         [SerializeField] private float _zoomTime;
-        
+
         private Camera _camera;
         private Transform _cameraTransform;
-        
+
         private Control _control;
 
         private float _movementSpeed;
@@ -46,17 +44,17 @@ namespace CameraControllers
         private Vector3 _rotateCurrentPosition;
 
         private Transform _followTransform;
-        
+
         private Coroutine _dragCoroutine;
         private Coroutine _moveCoroutine;
         private Coroutine _rotateCoroutine;
         private Coroutine _zoomCoroutine;
-        
+
         private void Awake()
         {
             _control = new Control();
         }
-        
+
         private void OnEnable()
         {
             _control.Enable();
@@ -94,12 +92,12 @@ namespace CameraControllers
         {
             _followTransform = null;
         }
-        
+
         private void Scroll(InputAction.CallbackContext context)
         {
             _newZoom += _zoomAmount * (context.ReadValue<Vector2>().y * _zoomMultiplier);
         }
-        
+
         private void DragStart(InputAction.CallbackContext context)
         {
             Plane plane = new Plane(Vector3.up, Vector3.zero);
@@ -109,7 +107,7 @@ namespace CameraControllers
             if (plane.Raycast(ray, out float entry))
             {
                 _dragStartPosition = ray.GetPoint(entry);
-                
+
                 if (_dragCoroutine != null)
                     StopCoroutine(_dragCoroutine);
                 _dragCoroutine = StartCoroutine(Drag());
@@ -127,17 +125,18 @@ namespace CameraControllers
                 if (plane.Raycast(ray, out float entry))
                 {
                     _dragCurrentPosition = ray.GetPoint(entry);
-                    
+
                     if (!_dragStartPosition.HasValue)
                         throw new InvalidOperationException();
 
-                    _newPosition = transform.position + (_dragStartPosition.Value - _dragCurrentPosition) * _dragMultiplier;
+                    _newPosition = transform.position +
+                                   (_dragStartPosition.Value - _dragCurrentPosition) * _dragMultiplier;
                 }
-            
+
                 yield return null;
             }
         }
-        
+
         private void DragStop(InputAction.CallbackContext context)
         {
             if (_dragCoroutine == null)
@@ -145,36 +144,36 @@ namespace CameraControllers
             StopCoroutine(_dragCoroutine);
             _dragStartPosition = null;
         }
-        
+
         private void RotationStart(InputAction.CallbackContext context)
         {
             _rotateStartPosition = _control.Camera.Position.ReadValue<Vector2>();
         }
-        
+
         private void RotationEnd(InputAction.CallbackContext context)
         {
             _rotateCurrentPosition = _control.Camera.Position.ReadValue<Vector2>();
-            
+
             if (!_rotateStartPosition.HasValue)
                 throw new InvalidOperationException();
-            
+
             Vector3 difference = _rotateCurrentPosition - _rotateStartPosition.Value;
 
             _rotateStartPosition = _rotateCurrentPosition;
-        
+
             _newRotation *= Quaternion.Euler(Vector3.up * (difference.x * -_touchRotationMultiplier));
         }
-        
+
         private void FastMovementOn(InputAction.CallbackContext context)
         {
             _movementSpeed = _movementFastSpeed;
         }
-        
+
         private void FastMovementOff(InputAction.CallbackContext context)
         {
             _movementSpeed = _movementNormalSpeed;
         }
-        
+
         private void MovementStart(InputAction.CallbackContext context)
         {
             if (_moveCoroutine != null)
@@ -188,18 +187,18 @@ namespace CameraControllers
             {
                 Vector2 movement = _control.Camera.Movement.ReadValue<Vector2>() * (_movementSpeed * Time.deltaTime);
                 _newPosition += new Vector3(movement.x, 0, movement.y);
-                
+
                 yield return null;
             }
         }
-        
+
         private void MovementStop(InputAction.CallbackContext context)
         {
             if (_moveCoroutine == null)
                 throw new InvalidOperationException();
             StopCoroutine(_moveCoroutine);
         }
-        
+
         private void RotateStart(InputAction.CallbackContext context)
         {
             if (_rotateCoroutine != null)
@@ -213,18 +212,18 @@ namespace CameraControllers
             {
                 float rotation = _control.Camera.Rotate.ReadValue<float>();
                 _newRotation *= Quaternion.Euler(Vector3.up * (rotation * _steppedRotationAmount * Time.deltaTime));
-                
+
                 yield return null;
             }
         }
-        
+
         private void RotateStop(InputAction.CallbackContext context)
         {
             if (_rotateCoroutine == null)
                 throw new InvalidOperationException();
             StopCoroutine(_rotateCoroutine);
         }
-        
+
         private void ZoomStart(InputAction.CallbackContext context)
         {
             if (_zoomCoroutine != null)
@@ -240,11 +239,11 @@ namespace CameraControllers
                     _newZoom += _zoomAmount * (_zoomMultiplier * Time.deltaTime);
                 else
                     _newZoom -= _zoomAmount * (_zoomMultiplier * Time.deltaTime);
-                
+
                 yield return null;
             }
         }
-        
+
         private void ZoomStop(InputAction.CallbackContext context)
         {
             if (_zoomCoroutine == null)
@@ -256,9 +255,9 @@ namespace CameraControllers
         {
             _camera = GetComponent<Camera>();
             _cameraTransform = _camera.transform;
-            
+
             _movementSpeed = _movementNormalSpeed;
-            
+
             _newPosition = transform.position;
             _newRotation = transform.rotation;
             _newZoom = _cameraTransform.localPosition;
@@ -276,7 +275,8 @@ namespace CameraControllers
         {
             transform.position = Vector3.Lerp(transform.position, _newPosition, _movementTime * Time.deltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, _newRotation, _rotationTime * Time.deltaTime);
-            _cameraTransform.localPosition = Vector3.Lerp(_cameraTransform.localPosition, _newZoom, _zoomTime * Time.deltaTime);
+            _cameraTransform.localPosition =
+                Vector3.Lerp(_cameraTransform.localPosition, _newZoom, _zoomTime * Time.deltaTime);
         }
 
         private void OnDisable()

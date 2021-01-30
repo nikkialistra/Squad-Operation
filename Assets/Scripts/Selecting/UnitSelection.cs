@@ -34,7 +34,7 @@ namespace Selecting
             _selectingAreaDrawer.Draw(rect);
         }
 
-        private void OnSelectingEnded(Rect rect)
+        public void OnSelectingEnded(Rect rect)
         {
             var newSelected = Enumerable.Empty<ISelectable>();
             if (rect.size != Vector2.zero)
@@ -54,11 +54,6 @@ namespace Selecting
             Selected = newSelectedArray;
 
             _selectingAreaDrawer.StopDrawing();
-        }
-        
-        private void ClearSelected()
-        {
-            Selected = Enumerable.Empty<ISelectable>();
         }
     }
 }

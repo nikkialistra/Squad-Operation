@@ -14,5 +14,10 @@ namespace Selecting.Repositories
                 _gameObjects = GameObject.FindObjectsOfType<Unit>();
             return _gameObjects;
         }
+
+        public void ResetObjects()
+        {
+            _gameObjects = null;
+        }
     }
 }
