@@ -31,6 +31,9 @@ namespace Selecting
 
         private void StartArea(InputAction.CallbackContext context)
         {
+            if (Keyboard.current.ctrlKey.isPressed)
+                return;
+            
             _startPoint = _control.Selection.Position.ReadValue<Vector2>();
             
             if (_areaUpdateCourotine != null)
@@ -53,7 +56,10 @@ namespace Selecting
 
         private void EndArea(InputAction.CallbackContext context)
         {
-            if (_startPoint == null || _areaUpdateCourotine == null)
+            if (_startPoint == null)
+                return;
+            
+            if (_areaUpdateCourotine == null)
                 throw new InvalidOperationException();
 
             SelectingEnded?.Invoke(GetRect(_startPoint.Value, _control.Selection.Position.ReadValue<Vector2>()));
