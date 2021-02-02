@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Core;
 using Units;
 using UnityEngine;
 
@@ -8,16 +9,24 @@ namespace Selecting.Repositories
     {
         private IEnumerable<Unit> _gameObjects;
         
+        private void OnEnable()
+        {
+            GameEvents.Instance.LoadGame += ResetObjects;
+        }
+        
         public IEnumerable<Unit> GetObjects()
         {
-            if (_gameObjects == null)
-                _gameObjects = GameObject.FindObjectsOfType<Unit>();
-            return _gameObjects;
+            return _gameObjects ??= FindObjectsOfType<Unit>();
         }
 
         public void ResetObjects()
         {
             _gameObjects = null;
+        }
+        
+        private void OnDisable()
+        {
+            GameEvents.Instance.LoadGame += ResetObjects;
         }
     }
 }

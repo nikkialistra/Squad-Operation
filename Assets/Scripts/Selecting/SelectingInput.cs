@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using Controls;
+using Selecting.Controls;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -71,9 +71,9 @@ namespace Selecting
         
         private Rect GetRect(Vector2 a, Vector2 b)
         {
-            Vector2 minCorner = new Vector2(a.x < b.x ? a.x : b.x, a.y < b.y ? a.y : b.y);
-            Vector2 maxCorner = new Vector2(a.x > b.x ? a.x : b.x, a.y > b.y ? a.y : b.y);
-            Vector2 size = new Vector2(maxCorner.x - minCorner.x, maxCorner.y - minCorner.y);
+            var minCorner = new Vector2(a.x < b.x ? a.x : b.x, a.y < b.y ? a.y : b.y);
+            var maxCorner = new Vector2(a.x > b.x ? a.x : b.x, a.y > b.y ? a.y : b.y);
+            var size = new Vector2(maxCorner.x - minCorner.x, maxCorner.y - minCorner.y);
             
             return new Rect(minCorner, size);
         }

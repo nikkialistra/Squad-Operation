@@ -10,7 +10,7 @@ namespace Units
     {
         private GameObject _template;
         
-        private Dictionary<GameObject, List<ITargetable>> _links = new Dictionary<GameObject, List<ITargetable>>();
+        private readonly Dictionary<GameObject, List<ITargetable>> _links = new Dictionary<GameObject, List<ITargetable>>();
         
         [Inject]
         public void Construct(GameObject template)
@@ -20,7 +20,7 @@ namespace Units
         
         public GameObject PlaceTo(Vector3 coordinate)
         {
-            GameObject target = GetFromPullOrCreate();
+            var target = GetFromPullOrCreate();
 
             target.transform.position = coordinate;
             target.gameObject.SetActive(true);
@@ -30,13 +30,12 @@ namespace Units
 
         private GameObject GetFromPullOrCreate()
         {
-            foreach (var target in _links.Keys)
+            foreach (var target in _links.Keys.Where(target => !_links[target].Any()))
             {
-                if (!_links[target].Any())
-                    return target;
+                return target;
             }
 
-            return CreateNew();    
+            return CreateNew();
         }
 
         private GameObject CreateNew()
@@ -51,7 +50,7 @@ namespace Units
 
         public void Link(GameObject point, ITargetable from)
         {
-            if (_links.ContainsKey(point) == false)
+            if (!_links.ContainsKey(point))
                 throw new InvalidOperationException();
 
             _links.Values
@@ -65,10 +64,9 @@ namespace Units
 
         private void OffAllWithoutLinks()
         {
-            foreach (var point in _links.Keys)
+            foreach (var point in _links.Keys.Where(point => !_links[point].Any()))
             {
-                if (!_links[point].Any())
-                    point.gameObject.SetActive(false);
+                point.gameObject.SetActive(false);
             }
         }
     }

@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Controls;
+using Selecting.Controls;
 using Selecting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -40,22 +40,22 @@ namespace Units
             if (!_unitSelection.Selected.Any())
                 return;
 
-            Vector3? worldPoint = TryGetWorldPointUnderMouse();
+            var worldPoint = TryGetWorldPointUnderMouse();
 
             if (worldPoint.HasValue)
             {
-                GameObject targetPoint = _pool.PlaceTo(worldPoint.Value);
+                var targetPoint = _pool.PlaceTo(worldPoint.Value);
                 MoveAllTo(targetPoint);
             }
         }
 
         private Vector3? TryGetWorldPointUnderMouse()
         {
-            Vector2 mousePosition = _control.Targeting.Position.ReadValue<Vector2>();
-            Ray rayIntoScene =
+            var mousePosition = _control.Targeting.Position.ReadValue<Vector2>();
+            var rayIntoScene =
                 _camera.ScreenPointToRay(new Vector3(mousePosition.x, mousePosition.y, _camera.nearClipPlane));
 
-            if (Physics.Raycast(rayIntoScene, out RaycastHit hit))
+            if (Physics.Raycast(rayIntoScene, out var hit))
                 return hit.point;
             else
                 return null;

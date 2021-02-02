@@ -1,0 +1,16 @@
+{
+    "name": "Saving",
+    "rootNamespace": "",
+    "references": [
+        "GUID:557b08be8b15fa54b85a7e76e7901830"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

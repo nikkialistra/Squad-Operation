@@ -1,23 +1,24 @@
 ﻿using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using Serialization.Surrogates;
+using Saving.Serialization.Surrogates;
 using UnityEngine;
 
-namespace Serialization
+namespace Saving.Serialization
 {
     public class SerializationManager
     {
         public static bool Save(string saveName, object saveData)
         {
-            BinaryFormatter formatter = GetBinaryFormatter();
+            var formatter = GetBinaryFormatter();
 
-            if (!Directory.Exists(Application.persistentDataPath + "/saves"))
-                Directory.CreateDirectory(Application.persistentDataPath + "/saves");
+            var basePath = Path.Combine(Application.persistentDataPath, "saves");
+            if (!Directory.Exists(basePath))
+                Directory.CreateDirectory(basePath);
 
-            string path = Application.persistentDataPath + "/saves/" + saveName + ".save";
+            var path = Path.Combine(basePath, saveName);
 
-            FileStream file = File.Create(path);
+            var file = File.Create(path);
             
             formatter.Serialize(file, saveData);
             
@@ -28,24 +29,24 @@ namespace Serialization
 
         public static object Load(string loadName)
         {
-            string path = Application.persistentDataPath + "/saves/" + loadName + ".save";
+            var path = Path.Combine(Application.persistentDataPath, "saves", loadName);
 
             if (!File.Exists(path))
                 return null;
 
-            BinaryFormatter formatter = GetBinaryFormatter();
+            var formatter = GetBinaryFormatter();
 
-            FileStream file = File.Open(path, FileMode.Open);
+            var file = File.Open(path, FileMode.Open);
 
             try
             {
-                object save = formatter.Deserialize(file);
+                var save = formatter.Deserialize(file);
                 file.Close();
                 return save;
             }
             catch 
             {
-                Debug.LogErrorFormat("Failed to load file at {0}", loadName);
+                Debug.LogError($"Failed to load file at {loadName}");
                 file.Close();
                 return null;
             }
@@ -53,12 +54,12 @@ namespace Serialization
 
         private static BinaryFormatter GetBinaryFormatter()
         {
-            BinaryFormatter formatter = new BinaryFormatter();
+            var formatter = new BinaryFormatter();
             
-            SurrogateSelector selector = new SurrogateSelector();
+            var selector = new SurrogateSelector();
             
-            Vector3SerializationSurrogate vector3Surrogate = new Vector3SerializationSurrogate();
-            QuaternionSerializationSurrogate quaternionSurrogate = new QuaternionSerializationSurrogate();
+            var vector3Surrogate = new Vector3SerializationSurrogate();
+            var quaternionSurrogate = new QuaternionSerializationSurrogate();
             
             selector.AddSurrogate(typeof(Vector3), new StreamingContext(StreamingContextStates.All), vector3Surrogate);
             selector.AddSurrogate(typeof(Quaternion), new StreamingContext(StreamingContextStates.All), quaternionSurrogate);

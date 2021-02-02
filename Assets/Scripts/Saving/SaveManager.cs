@@ -1,9 +1,7 @@
-﻿using Saving.Entities;
-using Selecting.Repositories;
-using Serialization;
-using Services;
+﻿using Core;
+using Saving.Entities;
+using Saving.Serialization;
 using UnityEngine;
-using Zenject;
 
 namespace Saving
 {
@@ -11,52 +9,48 @@ namespace Saving
     {
         [SerializeField] private GameObject _unitPrefab;
         [SerializeField] private Transform _unitRoot;
-        
-        private IUnitRepository _unitRepository;
 
-        [Inject]
-        public void Construct(IUnitRepository unitRepository)
-        {
-            _unitRepository = unitRepository;
-        }
-
-        private void Start()
+        private void OnEnable()
         {
             GameEvents.Instance.SaveGame += SaveGame;
             GameEvents.Instance.LoadGame += LoadGame;
         }
 
-        public void SaveGame()
+        private void SaveGame()
         {
-            SaveData saveData = SaveData.Current;
+            var saveData = SaveData.Current;
        
             saveData.Units.Clear();
             
             foreach (var unitHandler in FindObjectsOfType<UnitHandler>())
             {
-                UnitData unitData = unitHandler.GetUnitData();
+                var unitData = unitHandler.GetUnitData();
                 saveData.Units.Add(unitData);
             }
 
             SerializationManager.Save("save", saveData);
         }
-        
-        public void LoadGame()
+
+        private void LoadGame()
         {
             SaveData.Current = (SaveData) SerializationManager.Load("save");
-            
-            _unitRepository.ResetObjects();
 
             foreach (var unitData in SaveData.Current.Units)
             {
-                GameObject gameObject = Instantiate(_unitPrefab, _unitRoot);
+                var unit = Instantiate(_unitPrefab, _unitRoot);
 
-                UnitHandler unitHandler = gameObject.GetComponent<UnitHandler>();
+                var unitHandler = unit.GetComponent<UnitHandler>();
 
                 unitHandler.SetUnitData(unitData);
                 unitHandler.transform.position = unitData.Position;
                 unitHandler.transform.rotation = unitData.Rotation;
             }
+        }
+        
+        private void OnDisable()
+        {
+            GameEvents.Instance.SaveGame -= SaveGame;
+            GameEvents.Instance.LoadGame -= LoadGame;
         }
     }
 }

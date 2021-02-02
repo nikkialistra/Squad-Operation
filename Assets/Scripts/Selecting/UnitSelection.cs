@@ -34,7 +34,7 @@ namespace Selecting
             _selectingAreaDrawer.Draw(rect);
         }
 
-        public void OnSelectingEnded(Rect rect)
+        private void OnSelectingEnded(Rect rect)
         {
             var newSelected = Enumerable.Empty<ISelectable>();
             if (rect.size != Vector2.zero)

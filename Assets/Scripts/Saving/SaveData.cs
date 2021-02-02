@@ -10,15 +10,10 @@ namespace Saving
         private static SaveData _current;
         public static SaveData Current
         {
-            get
-            {
-                if (_current == null)
-                    _current = new SaveData();
-                return _current;
-            }
+            get { return _current ??= new SaveData(); }
             set => _current = value;
         }
 
-        public List<UnitData> Units = new List<UnitData>();
+        public IList<UnitData> Units = new List<UnitData>();
     }
 }

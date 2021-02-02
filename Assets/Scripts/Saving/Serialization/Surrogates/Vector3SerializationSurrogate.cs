@@ -1,13 +1,13 @@
 ﻿using System.Runtime.Serialization;
 using UnityEngine;
 
-namespace Serialization.Surrogates
+namespace Saving.Serialization.Surrogates
 {
     public class Vector3SerializationSurrogate : ISerializationSurrogate
     {
         public void GetObjectData(object obj, SerializationInfo info, StreamingContext context)
         {
-            Vector3 vector3 = (Vector3) obj;
+            var vector3 = (Vector3) obj;
             
             info.AddValue("x", vector3.x);
             info.AddValue("y", vector3.y);
@@ -16,7 +16,7 @@ namespace Serialization.Surrogates
 
         public object SetObjectData(object obj, SerializationInfo info, StreamingContext context, ISurrogateSelector selector)
         {
-            Vector3 vector3 = (Vector3) obj;
+            var vector3 = (Vector3) obj;
             
             vector3.x = (float) info.GetValue("x", typeof(float));
             vector3.y = (float) info.GetValue("y", typeof(float));

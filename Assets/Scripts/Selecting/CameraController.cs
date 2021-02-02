@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using Controls;
+using Selecting.Controls;
 using Units;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,18 +10,21 @@ namespace CameraControllers
     [RequireComponent(typeof(Camera))]
     public class CameraController : MonoBehaviour
     {
-        [Header("Movement")] [SerializeField] private float _movementNormalSpeed;
+        [Header("Movement")] 
+        [SerializeField] private float _movementNormalSpeed;
         [SerializeField] private float _movementFastSpeed;
         [SerializeField] private float _dragMultiplier;
 
-        [Header("Rotation")] [SerializeField] private float _steppedRotationAmount;
+        [Header("Rotation")] 
+        [SerializeField] private float _steppedRotationAmount;
         [SerializeField] private float _touchRotationMultiplier;
 
-        [Header("Zoom")] [SerializeField] private Vector3 _zoomAmount;
+        [Header("Zoom")] 
+        [SerializeField] private Vector3 _zoomAmount;
         [SerializeField] private float _zoomMultiplier;
 
-        [Header("Multipliers")] [SerializeField]
-        private float _movementTime;
+        [Header("Multipliers")] 
+        [SerializeField] private float _movementTime;
 
         [SerializeField] private float _rotationTime;
         [SerializeField] private float _zoomTime;
@@ -77,9 +80,9 @@ namespace CameraControllers
 
         private void SetFollow(InputAction.CallbackContext context)
         {
-            Ray ray = _camera.ScreenPointToRay(_control.Camera.Position.ReadValue<Vector2>());
+            var ray = _camera.ScreenPointToRay(_control.Camera.Position.ReadValue<Vector2>());
 
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            if (Physics.Raycast(ray, out var hit))
             {
                 if (hit.transform.gameObject.GetComponent<ISelectable>() != null)
                 {
@@ -100,11 +103,11 @@ namespace CameraControllers
 
         private void DragStart(InputAction.CallbackContext context)
         {
-            Plane plane = new Plane(Vector3.up, Vector3.zero);
+            var plane = new Plane(Vector3.up, Vector3.zero);
 
-            Ray ray = _camera.ScreenPointToRay(_control.Camera.Position.ReadValue<Vector2>());
+            var ray = _camera.ScreenPointToRay(_control.Camera.Position.ReadValue<Vector2>());
 
-            if (plane.Raycast(ray, out float entry))
+            if (plane.Raycast(ray, out var entry))
             {
                 _dragStartPosition = ray.GetPoint(entry);
 
@@ -118,11 +121,11 @@ namespace CameraControllers
         {
             while (true)
             {
-                Plane plane = new Plane(Vector3.up, Vector3.zero);
+                var plane = new Plane(Vector3.up, Vector3.zero);
 
-                Ray ray = _camera.ScreenPointToRay(_control.Camera.Position.ReadValue<Vector2>());
+                var ray = _camera.ScreenPointToRay(_control.Camera.Position.ReadValue<Vector2>());
 
-                if (plane.Raycast(ray, out float entry))
+                if (plane.Raycast(ray, out var entry))
                 {
                     _dragCurrentPosition = ray.GetPoint(entry);
 
@@ -157,7 +160,7 @@ namespace CameraControllers
             if (!_rotateStartPosition.HasValue)
                 throw new InvalidOperationException();
 
-            Vector3 difference = _rotateCurrentPosition - _rotateStartPosition.Value;
+            var difference = _rotateCurrentPosition - _rotateStartPosition.Value;
 
             _rotateStartPosition = _rotateCurrentPosition;
 
@@ -185,7 +188,7 @@ namespace CameraControllers
         {
             while (true)
             {
-                Vector2 movement = _control.Camera.Movement.ReadValue<Vector2>() * (_movementSpeed * Time.deltaTime);
+                var movement = _control.Camera.Movement.ReadValue<Vector2>() * (_movementSpeed * Time.deltaTime);
                 _newPosition += new Vector3(movement.x, 0, movement.y);
 
                 yield return null;
@@ -210,7 +213,7 @@ namespace CameraControllers
         {
             while (true)
             {
-                float rotation = _control.Camera.Rotate.ReadValue<float>();
+                var rotation = _control.Camera.Rotate.ReadValue<float>();
                 _newRotation *= Quaternion.Euler(Vector3.up * (rotation * _steppedRotationAmount * Time.deltaTime));
 
                 yield return null;
@@ -267,7 +270,6 @@ namespace CameraControllers
         {
             if (_followTransform != null)
                 _newPosition = _followTransform.position;
-
             ComputeTransform();
         }
 

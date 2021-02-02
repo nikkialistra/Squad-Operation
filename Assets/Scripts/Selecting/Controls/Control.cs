@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/Controls/Control.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/Selecting/Controls/Control.inputactions'
 
 using System;
 using System.Collections;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-namespace Controls
+namespace Selecting.Controls
 {
     public class @Control : IInputActionCollection, IDisposable
     {

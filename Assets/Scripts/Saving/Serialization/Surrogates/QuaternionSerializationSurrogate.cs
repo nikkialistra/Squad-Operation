@@ -1,13 +1,13 @@
 ﻿using System.Runtime.Serialization;
 using UnityEngine;
 
-namespace Serialization.Surrogates
+namespace Saving.Serialization.Surrogates
 {
     public class QuaternionSerializationSurrogate : ISerializationSurrogate
     {
         public void GetObjectData(object obj, SerializationInfo info, StreamingContext context)
         {
-            Quaternion quaternion = (Quaternion) obj;
+            var quaternion = (Quaternion) obj;
             
             info.AddValue("x", quaternion.x);
             info.AddValue("y", quaternion.y);
@@ -17,7 +17,7 @@ namespace Serialization.Surrogates
 
         public object SetObjectData(object obj, SerializationInfo info, StreamingContext context, ISurrogateSelector selector)
         {
-            Quaternion quaternion = (Quaternion) obj;
+            var quaternion = (Quaternion) obj;
             
             quaternion.x = (float) info.GetValue("x", typeof(float));
             quaternion.y = (float) info.GetValue("y", typeof(float));

@@ -30,7 +30,7 @@ namespace Selecting.Selectors
             {
                 if (gameObject.GetComponent<ISelectable>() != null)
                 {
-                    Vector3 screenPoint = _camera.WorldToScreenPoint(gameObject.transform.position);
+                    var screenPoint = _camera.WorldToScreenPoint(gameObject.transform.position);
 
                     if (rect.Contains(screenPoint))
                     {
