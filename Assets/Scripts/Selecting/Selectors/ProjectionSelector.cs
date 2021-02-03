@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using Selecting.Repositories;
-using Units;
+using Selecting.Units;
 using UnityEngine;
 
 namespace Selecting.Selectors
 {
     public class ProjectionSelector : ISelector
     {
-        private readonly IUnitRepository _unitRepository;
+        private readonly UnitRepository _unitRepository;
         private readonly Camera _camera;
 
         private IEnumerable<Unit> _gameObjects;
 
-        ProjectionSelector(IUnitRepository unitRepository, Camera camera)
+        public ProjectionSelector(UnitRepository unitRepository, Camera camera)
         {
             _unitRepository = unitRepository;
             _camera = camera;

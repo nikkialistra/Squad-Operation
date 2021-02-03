@@ -1,19 +1,19 @@
+using Events;
 using Saving;
 using UnityEngine;
 using Selecting;
-using Selecting.Repositories;
 using Selecting.Selectors;
-using Units;
+using Selecting.Units;
 
 namespace Zenject
 {
     public class SceneInstaller : MonoInstaller
     {
         [Header("MonoServices")] 
-        [SerializeField] private UnitRepository _unitRepository;
         [SerializeField] private SelectingInput _selectingInput;
-        [SerializeField] private SaveManager _saveManager;
-        
+        [SerializeField] private UnitRepository _unitRepository;
+        [SerializeField] private SaveLoadManager _saveLoadManager;
+        [SerializeField] private SaveLoadEvent _saveLoadEvent;
 
         [Header("Selector (projection by default)")] 
         [SerializeField] private bool _usePhysics3DSelector;
@@ -40,12 +40,13 @@ namespace Zenject
             else
                 Container.Bind<ISelector>().To<ProjectionSelector>().AsSingle();
 
-            Container.Bind<IUnitRepository>().FromInstance(_unitRepository);
+            Container.BindInstance(_unitRepository);
             Container.BindInstance(_selectingInput);
             
             Container.Bind<UiDrawer>().AsSingle().WithArguments(_selectionRect, _uiCanvas);
 
-            Container.BindInstance(_saveManager);
+            Container.BindInstance(_saveLoadManager);
+            Container.BindInstance(_saveLoadEvent);
 
             Container.BindInstance(_template).WhenInjectedInto<PointObjectPool>();
             Container.Bind<PointObjectPool>().FromInstance(_pool);

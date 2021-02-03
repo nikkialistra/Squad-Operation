@@ -2,7 +2,6 @@
     "name": "Selecting",
     "rootNamespace": "",
     "references": [
-        "GUID:557b08be8b15fa54b85a7e76e7901830",
         "GUID:75469ad4d38634e559750d17036d5f7c"
     ],
     "includePlatforms": [],

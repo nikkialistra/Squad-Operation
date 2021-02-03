@@ -28,6 +28,13 @@ namespace Selecting
             _control.Selection.Select.started += StartArea;
             _control.Selection.Select.canceled += EndArea;
         }
+        
+        private void OnDisable()
+        {
+            _control.Selection.Select.started -= StartArea;
+            _control.Selection.Select.canceled -= EndArea;
+            _control.Disable();
+        }
 
         private void StartArea(InputAction.CallbackContext context)
         {
@@ -76,13 +83,6 @@ namespace Selecting
             var size = new Vector2(maxCorner.x - minCorner.x, maxCorner.y - minCorner.y);
             
             return new Rect(minCorner, size);
-        }
-
-        private void OnDisable()
-        {
-            _control.Selection.Select.started -= StartArea;
-            _control.Selection.Select.canceled -= EndArea;
-            _control.Disable();
         }
     }
 }

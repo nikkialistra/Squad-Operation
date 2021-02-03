@@ -8,6 +8,9 @@ namespace Saving
     public class SaveData
     {
         private static SaveData _current;
+        
+        private SaveData() { }
+
         public static SaveData Current
         {
             get { return _current ??= new SaveData(); }

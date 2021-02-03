@@ -1,11 +1,10 @@
 ﻿using System.Linq;
 using Selecting.Controls;
-using Selecting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
-namespace Units
+namespace Selecting.Units
 {
     public class MovementCommand : MonoBehaviour
     {
@@ -28,11 +27,17 @@ namespace Units
         {
             _control = new Control();
         }
-        
+
         private void OnEnable()
         {
             _control.Enable();
             _control.Targeting.SetTarget.started += SetTarget;
+        }
+
+        private void OnDisable()
+        {
+            _control.Disable();
+            _control.Targeting.SetTarget.started -= SetTarget;
         }
 
         private void SetTarget(InputAction.CallbackContext context)
@@ -60,7 +65,7 @@ namespace Units
             else
                 return null;
         }
-        
+
         private void MoveAllTo(GameObject point)
         {
             foreach (var unit in _unitSelection.Selected)
@@ -71,12 +76,6 @@ namespace Units
                         _pool.Link(point, targetable);
                 }
             }
-        }
-        
-        private void OnDisable()
-        {
-            _control.Disable();
-            _control.Targeting.SetTarget.started -= SetTarget;
         }
     }
 }

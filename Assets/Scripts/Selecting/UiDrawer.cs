@@ -8,7 +8,7 @@ namespace Selecting
         private readonly GameObject _selectionGameObject;
         private readonly Canvas _uiCanvas;
 
-        UiDrawer(RectTransform selectionRect, Canvas uiCanvas)
+        public UiDrawer(RectTransform selectionRect, Canvas uiCanvas)
         {
             _selectionRect = selectionRect;
             _selectionGameObject = selectionRect.gameObject;

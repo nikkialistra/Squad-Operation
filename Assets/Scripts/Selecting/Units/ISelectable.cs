@@ -1,4 +1,4 @@
-﻿namespace Units
+﻿namespace Selecting.Units
 {
     public interface ISelectable
     {

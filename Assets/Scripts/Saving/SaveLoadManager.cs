@@ -1,22 +1,15 @@
-﻿using Core;
-using Saving.Entities;
+﻿using Saving.Entities;
 using Saving.Serialization;
 using UnityEngine;
 
 namespace Saving
 {
-    public class SaveManager : MonoBehaviour
+    public class SaveLoadManager : MonoBehaviour
     {
         [SerializeField] private GameObject _unitPrefab;
         [SerializeField] private Transform _unitRoot;
 
-        private void OnEnable()
-        {
-            GameEvents.Instance.SaveGame += SaveGame;
-            GameEvents.Instance.LoadGame += LoadGame;
-        }
-
-        private void SaveGame()
+        public void SaveGame()
         {
             var saveData = SaveData.Current;
        
@@ -31,7 +24,7 @@ namespace Saving
             SerializationManager.Save("save", saveData);
         }
 
-        private void LoadGame()
+        public void LoadGame()
         {
             SaveData.Current = (SaveData) SerializationManager.Load("save");
 
@@ -45,12 +38,6 @@ namespace Saving
                 unitHandler.transform.position = unitData.Position;
                 unitHandler.transform.rotation = unitData.Rotation;
             }
-        }
-        
-        private void OnDisable()
-        {
-            GameEvents.Instance.SaveGame -= SaveGame;
-            GameEvents.Instance.LoadGame -= LoadGame;
         }
     }
 }

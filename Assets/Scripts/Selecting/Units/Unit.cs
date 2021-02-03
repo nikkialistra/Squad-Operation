@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-namespace Units
+namespace Selecting.Units
 {
     public class Unit : MonoBehaviour, ISelectable, ITargetable
     {
         [SerializeField] private GameObject _selectionIndicator;
-        
         [SerializeField] private NavMeshAgent _navMeshAgent;
         
         public void OnSelect()

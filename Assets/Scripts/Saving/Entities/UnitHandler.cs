@@ -1,5 +1,4 @@
 ﻿using System;
-using Core;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,22 +19,19 @@ namespace Saving.Entities
 
                 _unitData.Type = _unitType;
             }
-
-            GameEvents.Instance.LoadGame += DestroySelf;
         }
-
-        public void DestroySelf()
-        {
-            GameEvents.Instance.LoadGame -= DestroySelf;
-            Destroy(gameObject);
-        }
-
+        
         private void Update()
         {
             _unitData.Position = transform.position;
             _unitData.Rotation = transform.rotation;
         }
-        
+
+        public void DestroySelf()
+        {
+            Destroy(gameObject);
+        }
+
         public UnitData GetUnitData()
         {
             return _unitData;

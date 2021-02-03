@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using Saving.Serialization.Surrogates;
@@ -32,7 +33,7 @@ namespace Saving.Serialization
             var path = Path.Combine(Application.persistentDataPath, "saves", loadName);
 
             if (!File.Exists(path))
-                return null;
+                throw new ArgumentException(nameof(loadName));
 
             var formatter = GetBinaryFormatter();
 
@@ -46,9 +47,8 @@ namespace Saving.Serialization
             }
             catch 
             {
-                Debug.LogError($"Failed to load file at {loadName}");
                 file.Close();
-                return null;
+                throw new FileLoadException($"Failed to load file at {loadName}");
             }
         }
 

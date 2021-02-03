@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
 using Selecting.Controls;
-using Units;
+using Selecting.Units;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace CameraControllers
+namespace Selecting
 {
     [RequireComponent(typeof(Camera))]
     public class CameraController : MonoBehaviour
@@ -76,6 +76,45 @@ namespace CameraControllers
             _control.Camera.Rotate.canceled += RotateStop;
             _control.Camera.Zoom.started += ZoomStart;
             _control.Camera.Zoom.canceled += ZoomStop;
+        }
+
+        private void OnDisable()
+        {
+            _control.Camera.SetFollow.started -= SetFollow;
+            _control.Camera.ResetFollow.started -= ResetFollow;
+            _control.Camera.Scroll.started -= Scroll;
+            _control.Camera.Drag.started -= DragStart;
+            _control.Camera.Drag.canceled -= DragStop;
+            _control.Camera.Rotation.started -= RotationStart;
+            _control.Camera.Rotation.canceled -= RotationEnd;
+            _control.Camera.FastMovement.started -= FastMovementOn;
+            _control.Camera.FastMovement.canceled -= FastMovementOff;
+            _control.Camera.Movement.started -= MovementStart;
+            _control.Camera.Movement.canceled -= MovementStop;
+            _control.Camera.Rotate.started -= RotateStart;
+            _control.Camera.Rotate.canceled -= RotateStop;
+            _control.Camera.Zoom.started -= ZoomStart;
+            _control.Camera.Zoom.canceled -= ZoomStop;
+            _control.Disable();
+        }
+        
+        private void Start()
+        {
+            _camera = GetComponent<Camera>();
+            _cameraTransform = _camera.transform;
+
+            _movementSpeed = _movementNormalSpeed;
+
+            _newPosition = transform.position;
+            _newRotation = transform.rotation;
+            _newZoom = _cameraTransform.localPosition;
+        }
+
+        private void Update()
+        {
+            if (_followTransform != null)
+                _newPosition = _followTransform.position;
+            ComputeTransform();
         }
 
         private void SetFollow(InputAction.CallbackContext context)
@@ -254,51 +293,12 @@ namespace CameraControllers
             StopCoroutine(_zoomCoroutine);
         }
 
-        private void Start()
-        {
-            _camera = GetComponent<Camera>();
-            _cameraTransform = _camera.transform;
-
-            _movementSpeed = _movementNormalSpeed;
-
-            _newPosition = transform.position;
-            _newRotation = transform.rotation;
-            _newZoom = _cameraTransform.localPosition;
-        }
-
-        private void Update()
-        {
-            if (_followTransform != null)
-                _newPosition = _followTransform.position;
-            ComputeTransform();
-        }
-
         private void ComputeTransform()
         {
             transform.position = Vector3.Lerp(transform.position, _newPosition, _movementTime * Time.deltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, _newRotation, _rotationTime * Time.deltaTime);
             _cameraTransform.localPosition =
                 Vector3.Lerp(_cameraTransform.localPosition, _newZoom, _zoomTime * Time.deltaTime);
-        }
-
-        private void OnDisable()
-        {
-            _control.Camera.SetFollow.started -= SetFollow;
-            _control.Camera.ResetFollow.started -= ResetFollow;
-            _control.Camera.Scroll.started -= Scroll;
-            _control.Camera.Drag.started -= DragStart;
-            _control.Camera.Drag.canceled -= DragStop;
-            _control.Camera.Rotation.started -= RotationStart;
-            _control.Camera.Rotation.canceled -= RotationEnd;
-            _control.Camera.FastMovement.started -= FastMovementOn;
-            _control.Camera.FastMovement.canceled -= FastMovementOff;
-            _control.Camera.Movement.started -= MovementStart;
-            _control.Camera.Movement.canceled -= MovementStop;
-            _control.Camera.Rotate.started -= RotateStart;
-            _control.Camera.Rotate.canceled -= RotateStop;
-            _control.Camera.Zoom.started -= ZoomStart;
-            _control.Camera.Zoom.canceled -= ZoomStop;
-            _control.Disable();
         }
     }
 }

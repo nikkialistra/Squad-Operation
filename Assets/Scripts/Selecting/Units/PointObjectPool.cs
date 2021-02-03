@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-namespace Units
+namespace Selecting.Units
 {
     public class PointObjectPool : MonoBehaviour
     {
@@ -28,6 +28,26 @@ namespace Units
             return target;
         }
 
+        public void Link(GameObject point, ITargetable from)
+        {
+            if (!_links.ContainsKey(point))
+                throw new InvalidOperationException();
+
+            _links.Values
+                .FirstOrDefault(sources => sources.Contains(from))
+                ?.Remove(from);
+            
+            _links[point].Add(from);
+
+            OffAllWithoutLinks();
+        }
+
+        public void OffAll()
+        {
+            foreach (var point in _links.Keys)
+                point.gameObject.SetActive(false);
+        }
+
         private GameObject GetFromPullOrCreate()
         {
             foreach (var target in _links.Keys.Where(target => !_links[target].Any()))
@@ -46,20 +66,6 @@ namespace Units
             _links.Add(target, new List<ITargetable>());
 
             return target;
-        }
-
-        public void Link(GameObject point, ITargetable from)
-        {
-            if (!_links.ContainsKey(point))
-                throw new InvalidOperationException();
-
-            _links.Values
-                .FirstOrDefault(sources => sources.Contains(from))
-                ?.Remove(from);
-            
-            _links[point].Add(from);
-
-            OffAllWithoutLinks();
         }
 
         private void OffAllWithoutLinks()

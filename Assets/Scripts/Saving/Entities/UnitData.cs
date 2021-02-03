@@ -6,7 +6,7 @@ namespace Saving.Entities
     [Serializable]
     public enum UnitType
     {
-    Regular,    
+        Regular,    
         Other
     }
     
