@@ -35,8 +35,6 @@ namespace Saving
                 var unitHandler = unit.GetComponent<UnitHandler>();
 
                 unitHandler.SetUnitData(unitData);
-                unitHandler.transform.position = unitData.Position;
-                unitHandler.transform.rotation = unitData.Rotation;
             }
         }
     }

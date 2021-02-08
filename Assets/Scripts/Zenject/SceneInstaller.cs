@@ -33,21 +33,39 @@ namespace Zenject
         {
             Container.BindInstance(_camera).AsSingle();
             
-            Container.BindInterfacesAndSelfTo<UnitSelection>().AsSingle().NonLazy();
+            Container.BindInstance(_unitRepository);
+            
+            BindUnitSelectionSystem();
+            BindUnitSelector();
 
+            BindSaveSystem();
+
+            BindTargetingSystem();
+        }
+
+        private void BindUnitSelectionSystem()
+        {
+            Container.BindInterfacesAndSelfTo<UnitSelection>().AsSingle().NonLazy();
+            Container.BindInstance(_selectingInput);
+            Container.Bind<UiDrawer>().AsSingle().WithArguments(_selectionRect, _uiCanvas);
+        }
+
+        private void BindUnitSelector()
+        {
             if (_usePhysics3DSelector)
                 Container.Bind<ISelector>().To<Physics3DSelector>().AsSingle();
             else
                 Container.Bind<ISelector>().To<ProjectionSelector>().AsSingle();
+        }
 
-            Container.BindInstance(_unitRepository);
-            Container.BindInstance(_selectingInput);
-            
-            Container.Bind<UiDrawer>().AsSingle().WithArguments(_selectionRect, _uiCanvas);
-
+        private void BindSaveSystem()
+        {
             Container.BindInstance(_saveLoadManager);
             Container.BindInstance(_saveLoadEvent);
+        }
 
+        private void BindTargetingSystem()
+        {
             Container.BindInstance(_template).WhenInjectedInto<PointObjectPool>();
             Container.Bind<PointObjectPool>().FromInstance(_pool);
             Container.BindInstance(_movementCommand);

@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.AI;
 
 namespace Selecting.Units
 {
-    public class Unit : MonoBehaviour, ISelectable, ITargetable
+    public class Unit : MonoBehaviour, ISelectable
     {
         [SerializeField] private GameObject _selectionIndicator;
-        [SerializeField] private NavMeshAgent _navMeshAgent;
-        
+
         public void OnSelect()
         {
             _selectionIndicator.SetActive(true);
@@ -16,11 +14,6 @@ namespace Selecting.Units
         public void OnDeselect()
         {
             _selectionIndicator.SetActive(false);
-        }
-
-        public bool TryAcceptPoint(GameObject point)
-        {
-            return _navMeshAgent.SetDestination(point.transform.position);
         }
     }
 }
