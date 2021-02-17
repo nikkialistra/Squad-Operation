@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Selecting.Selectors;
-using Selecting.Units;
+using Units.Selectors;
+using Units.Units;
 using UnityEngine;
 using Zenject;
 
-namespace Selecting
+namespace Units.Services
 {
     public class UnitSelection : IInitializable
     {

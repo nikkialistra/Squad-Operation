@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Selecting.Units;
+using Units.Units;
 using UnityEngine;
 
-namespace Selecting
+namespace Units.Services
 {
     public class UnitRepository : MonoBehaviour
     {

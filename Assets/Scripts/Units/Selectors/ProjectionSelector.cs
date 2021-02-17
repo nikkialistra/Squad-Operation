@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Selecting.Units;
+using Units.Services;
+using Units.Units;
 using UnityEngine;
 
-namespace Selecting.Selectors
+namespace Units.Selectors
 {
     public class ProjectionSelector : ISelector
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
-using Selecting.Controls;
+using Units.Controls;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Selecting
+namespace Units.Services
 {
     public class SelectingInput : MonoBehaviour
     {

@@ -1,13 +1,21 @@
 ﻿using Saving.Entities;
 using Saving.Serialization;
 using UnityEngine;
+using Zenject;
 
 namespace Saving
 {
     public class SaveLoadManager : MonoBehaviour
     {
-        [SerializeField] private GameObject _unitPrefab;
-        [SerializeField] private Transform _unitRoot;
+        private GameObject _unitPrefab;
+        private Transform _unitRoot;
+        
+        [Inject]
+        public void Construct(GameObject unitPrefab, Transform unitRoot)
+        {
+            _unitPrefab = unitPrefab;
+            _unitRoot = unitRoot;
+        }
 
         public void SaveGame()
         {

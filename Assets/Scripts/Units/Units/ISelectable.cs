@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Selecting.Units
+namespace Units.Units
 {
     public interface ISelectable
     {

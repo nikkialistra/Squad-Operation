@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Selecting
+namespace Units.Services
 {
     public class UiDrawer
     {

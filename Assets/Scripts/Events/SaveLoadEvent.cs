@@ -1,7 +1,6 @@
 ﻿using Saving;
 using Saving.Entities;
-using Selecting;
-using Selecting.Units;
+using Units.Services;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -10,19 +9,23 @@ namespace Events
 {
     public class SaveLoadEvent : MonoBehaviour
     {
-        [SerializeField] private Button _saveButton;
-        [SerializeField] private Button _loadButton;
-
         private SaveLoadManager _saveLoadManager;
         private UnitRepository _unitRepository;
         private PointObjectPool _pointObjectPool;
         
+        private Button _saveButton;
+        private Button _loadButton;
+        
         [Inject]
-        public void Construct(SaveLoadManager saveLoadManager, UnitRepository unitRepository, PointObjectPool pointObjectPool)
+        public void Construct(SaveLoadManager saveLoadManager, UnitRepository unitRepository,
+            PointObjectPool pointObjectPool, [Inject(Id = "save")] Button saveButton, [Inject(Id = "load")] Button loadButton)
         {
             _saveLoadManager = saveLoadManager;
             _unitRepository = unitRepository;
             _pointObjectPool = pointObjectPool;
+
+            _saveButton = saveButton;
+            _loadButton = loadButton;
         }
 
         private void OnEnable()

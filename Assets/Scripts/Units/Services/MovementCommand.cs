@@ -1,10 +1,11 @@
 ﻿using System.Linq;
-using Selecting.Controls;
+using Units.Controls;
+using Units.Units;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
-namespace Selecting.Units
+namespace Units.Services
 {
     public class MovementCommand : MonoBehaviour
     {

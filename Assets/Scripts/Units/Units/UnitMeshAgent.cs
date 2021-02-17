@@ -2,7 +2,7 @@
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-namespace Selecting.Units
+namespace Units.Units
 {
     [RequireComponent(typeof(NavMeshAgent))]
     public class UnitMeshAgent : MonoBehaviour, ITargetable

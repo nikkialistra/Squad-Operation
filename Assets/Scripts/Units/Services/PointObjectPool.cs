@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Units.Units;
 using UnityEngine;
 using Zenject;
 
-namespace Selecting.Units
+namespace Units.Services
 {
     public class PointObjectPool : MonoBehaviour
     {

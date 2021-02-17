@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
-using Selecting.Controls;
-using Selecting.Units;
+using Units.Controls;
+using Units.Units;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Selecting
+namespace Units.Services
 {
     [RequireComponent(typeof(Camera))]
     public class CameraController : MonoBehaviour

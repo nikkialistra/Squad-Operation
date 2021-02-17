@@ -1,8 +1,7 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
-namespace Selecting.Units
+namespace Units.Units
 {
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(NavMeshAgent))]
