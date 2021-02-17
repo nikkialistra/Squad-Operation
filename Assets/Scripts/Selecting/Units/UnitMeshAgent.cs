@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
@@ -11,6 +10,7 @@ namespace Selecting.Units
         [SerializeField] private float _distanceToGroup;
         
         private NavMeshAgent _navMeshAgent;
+        private bool destinationRandomized = false;
 
         private void Awake()
         {
@@ -24,14 +24,17 @@ namespace Selecting.Units
 
         public bool TryAcceptPoint(GameObject point)
         {
-            Debug.Log(11);
+            destinationRandomized = false;
             return _navMeshAgent.SetDestination(point.transform.position);
         }
 
         private void RandomizeAgentDestinations()
         {
-            if (_navMeshAgent.hasPath && _navMeshAgent.remainingDistance < _distanceToGroup)
-                _navMeshAgent.destination += Random.insideUnitSphere * _distanceToGroup;
+            if (_navMeshAgent.hasPath && destinationRandomized == false && _navMeshAgent.remainingDistance < _distanceToGroup)
+            {
+                _navMeshAgent.SetDestination(transform.position + Random.insideUnitSphere * _distanceToGroup);
+                destinationRandomized = true;
+            }
         }
     }
 }

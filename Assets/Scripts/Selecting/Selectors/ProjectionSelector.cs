@@ -27,14 +27,13 @@ namespace Selecting.Selectors
             
             foreach (var gameObject in _gameObjects)
             {
-                if (gameObject.GetComponent<ISelectable>() != null)
-                {
-                    var screenPoint = _camera.WorldToScreenPoint(gameObject.transform.position);
+                if (gameObject.GetComponent<ISelectable>() == null) continue;
+                
+                var screenPoint = _camera.WorldToScreenPoint(gameObject.transform.position);
 
-                    if (rect.Contains(screenPoint))
-                    {
-                        yield return gameObject.GetComponent<ISelectable>();
-                    }
+                if (rect.Contains(screenPoint))
+                {
+                    yield return gameObject.GetComponent<ISelectable>();
                 }
             }
         }

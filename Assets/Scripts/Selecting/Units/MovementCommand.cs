@@ -47,11 +47,10 @@ namespace Selecting.Units
 
             var worldPoint = TryGetWorldPointUnderMouse();
 
-            if (worldPoint.HasValue)
-            {
-                var targetPoint = _pool.PlaceTo(worldPoint.Value);
-                MoveAllTo(targetPoint);
-            }
+            if (!worldPoint.HasValue) return;
+            
+            var targetPoint = _pool.PlaceTo(worldPoint.Value);
+            MoveAllTo(targetPoint);
         }
 
         private Vector3? TryGetWorldPointUnderMouse()
@@ -62,19 +61,19 @@ namespace Selecting.Units
 
             if (Physics.Raycast(rayIntoScene, out var hit))
                 return hit.point;
-            else
-                return null;
+            
+            return null;
         }
 
         private void MoveAllTo(GameObject point)
         {
             foreach (var unit in _unitSelection.Selected)
             {
-                if (unit is ITargetable targetable)
-                {
-                    if (targetable.TryAcceptPoint(point))
-                        _pool.Link(point, targetable);
-                }
+                var targetable = unit.GameObject.GetComponent<ITargetable>();
+                if (targetable == null) continue;
+                
+                if (targetable.TryAcceptPoint(point))
+                    _pool.Link(point, targetable);
             }
         }
     }

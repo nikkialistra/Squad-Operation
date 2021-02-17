@@ -8,11 +8,9 @@ namespace Selecting.Units
     [RequireComponent(typeof(NavMeshAgent))]
     public class UnitAnimator : MonoBehaviour
     {
-        private NavMeshAgent _navMeshAgent;
-        
         private Animator _animator;
-        private readonly UnitAnimator _unitAnimator;
-        
+        private NavMeshAgent _navMeshAgent;
+
         private readonly int _velocity = Animator.StringToHash("velocity");
 
         private void Awake()

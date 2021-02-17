@@ -6,6 +6,8 @@ namespace Selecting.Units
     {
         [SerializeField] private GameObject _selectionIndicator;
 
+        public GameObject GameObject => gameObject;
+
         public void OnSelect()
         {
             _selectionIndicator.SetActive(true);
