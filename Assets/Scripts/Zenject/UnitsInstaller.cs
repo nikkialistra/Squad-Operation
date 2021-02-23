@@ -8,28 +8,22 @@ namespace Zenject
     {
         [Header("Selection")] 
         [SerializeField] private SelectingInput _selectingInput;
-        [SerializeField] private UnitRepository _unitRepository;
-        
+
         [Header("Selector (projection by default)")]
         [SerializeField] private bool _usePhysics3DSelector;
         
         [SerializeField] private RectTransform _selectionRect;
         [SerializeField] private Canvas _uiCanvas;
         
-        [Header("Targeting")] 
-        [SerializeField] private GameObject _template;
-        
-        [SerializeField] private PointObjectPool _pool;
+        [Header("Targeting")]
         [SerializeField] private MovementCommand _movementCommand;
         
         public override void InstallBindings()
         {
-            Container.BindInstance(_unitRepository).AsSingle();
-            
             BindUnitSelectionSystem();
             BindUnitSelector();
             
-            BindTargetingSystem();
+            Container.BindInstance(_movementCommand);
         }
         
         private void BindUnitSelectionSystem()
@@ -45,13 +39,6 @@ namespace Zenject
                 Container.Bind<ISelector>().To<Physics3DSelector>().AsSingle();
             else
                 Container.Bind<ISelector>().To<ProjectionSelector>().AsSingle();
-        }
-        
-        private void BindTargetingSystem()
-        {
-            Container.BindInstance(_template).WhenInjectedInto<PointObjectPool>();
-            Container.Bind<PointObjectPool>().FromInstance(_pool);
-            Container.BindInstance(_movementCommand);
         }
     }
 }

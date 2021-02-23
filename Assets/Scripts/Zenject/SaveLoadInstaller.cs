@@ -1,8 +1,9 @@
-using Events;
 using Saving;
+using Saving.Entities;
 using Units.Services;
 using UnityEngine;
-using UnityEngine.UI;
+using Zenject.Events;
+using Zenject.Signals;
 
 namespace Zenject
 {
@@ -10,44 +11,58 @@ namespace Zenject
     {
         [Header("Base")]
         [SerializeField] private SaveLoadManager _saveLoadManager;
-        [SerializeField] private SaveLoadEvent _saveLoadEvent;
+        [SerializeField] private SaveEvent _saveEvent;
+        [SerializeField] private LoadEvent _loadEvent;
         
-        [Header("Repository")]
-        [SerializeField] private UnitRepository _unitRepository;
-        [SerializeField] private PointObjectPool _pool;
-        
-        [Header("Units")]
+        [Header("Unit Handling")]
+        [SerializeField] private UnitsHandler _unitsHandler;
+
+        [Header("Unit")] 
         [SerializeField] private GameObject _unitPrefab;
         [SerializeField] private Transform _unitRoot;
-        
-        [Header("Buttons")]
-        [SerializeField] private Button _saveButton;
-        [SerializeField] private Button _loadButton;
-        
+
         public override void InstallBindings()
         {
+            BindSignals();
+
             Container.BindInstance(_saveLoadManager).AsSingle();
             
-            Container.BindInstance(_unitRepository).AsSingle();
-            Container.Bind<PointObjectPool>().FromInstance(_pool);
-            
-            Container.BindInstance(_saveLoadEvent).AsSingle();
+            BindUnitHandling();
 
             BindUnits();
+        }
 
-            BindButtons();
+        private void BindSignals()
+        {
+            Container.BindInstance(_saveEvent).AsSingle();
+            Container.BindInstance(_loadEvent).AsSingle();
+
+            BindSaveSignal();
+            BindLoadSignal();
+        }
+
+        private void BindUnitHandling()
+        {
+            Container.BindInstance(_unitsHandler).AsSingle();
+        }
+
+        private void BindLoadSignal()
+        {
+            Container.BindSignal<LoadSignal>().ToMethod<UnitsHandler>(x => x.DestroyUnits).FromResolve();
+            Container.BindSignal<LoadSignal>().ToMethod<PointObjectPool>(x => x.OffAll).FromResolve();
+            Container.BindSignal<LoadSignal>().ToMethod<UnitRepository>(x => x.ResetObjects).FromResolve();
+            Container.BindSignal<LoadSignal>().ToMethod<SaveLoadManager>(x => x.LoadGame).FromResolve();
+        }
+
+        private void BindSaveSignal()
+        {
+            Container.BindSignal<SaveSignal>().ToMethod<SaveLoadManager>(x => x.SaveGame).FromResolve();
         }
 
         private void BindUnits()
         {
             Container.BindInstance(_unitPrefab).AsSingle();
             Container.BindInstance(_unitRoot).AsSingle();
-        }
-
-        private void BindButtons()
-        {
-            Container.BindInstance(_saveButton).WithId("save");
-            Container.BindInstance(_loadButton).WithId("load");
         }
     }
 }
