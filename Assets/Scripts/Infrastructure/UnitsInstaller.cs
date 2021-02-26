@@ -1,8 +1,10 @@
 using Units.Selectors;
 using Units.Services;
+using Units.Units;
 using UnityEngine;
+using Zenject;
 
-namespace Zenject
+namespace Infrastructure
 {
     public class UnitsInstaller : MonoInstaller
     {
@@ -18,14 +20,19 @@ namespace Zenject
         [Header("Targeting")]
         [SerializeField] private MovementCommand _movementCommand;
         
+        [Header("Unit")] [SerializeField]
+        private GameObject _unitFacadePrefab;
+        
         public override void InstallBindings()
         {
             BindUnitSelectionSystem();
             BindUnitSelector();
             
             Container.BindInstance(_movementCommand);
+
+            BindUnit();
         }
-        
+
         private void BindUnitSelectionSystem()
         {
             Container.BindInterfacesAndSelfTo<UnitSelection>().AsSingle().NonLazy();
@@ -39,6 +46,21 @@ namespace Zenject
                 Container.Bind<ISelector>().To<Physics3DSelector>().AsSingle();
             else
                 Container.Bind<ISelector>().To<ProjectionSelector>().AsSingle();
+        }
+
+        private void BindUnit()
+        {
+            Container.Bind<UnitFacade>().FromSubContainerResolve().ByMethod(InstallUnitFacade).AsSingle();
+            
+            Container.BindFactory<UnitFacade, UnitFacade.Factory>().FromSubContainerResolve()
+                .ByNewContextPrefab(_unitFacadePrefab);
+
+            Container.BindInterfacesTo<UnitGenerator>().AsSingle();
+        }
+
+        private void InstallUnitFacade(DiContainer subContainer)
+        {
+            subContainer.Bind<UnitFacade>().AsSingle();
         }
     }
 }

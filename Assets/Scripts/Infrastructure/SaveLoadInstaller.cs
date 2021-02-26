@@ -1,11 +1,12 @@
+using Infrastructure.Events;
+using Infrastructure.Signals;
 using Saving;
 using Saving.Entities;
 using Units.Services;
 using UnityEngine;
-using Zenject.Events;
-using Zenject.Signals;
+using Zenject;
 
-namespace Zenject
+namespace Infrastructure
 {
     public class SaveLoadInstaller : MonoInstaller
     {

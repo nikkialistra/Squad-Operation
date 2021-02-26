@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
+using Zenject;
 using Random = UnityEngine.Random;
 
 namespace Units.Units
@@ -7,10 +8,16 @@ namespace Units.Units
     [RequireComponent(typeof(NavMeshAgent))]
     public class UnitMeshAgent : MonoBehaviour, ITargetable
     {
-        [SerializeField] private float _distanceToGroup;
+        private float _distanceToGroup;
         
         private NavMeshAgent _navMeshAgent;
-        private bool destinationRandomized = false;
+        private bool _destinationRandomized = false;
+        
+        [Inject]
+        public void Construct(float distanceToGroup)
+        {
+            _distanceToGroup = distanceToGroup;
+        }
 
         private void Awake()
         {
@@ -24,16 +31,16 @@ namespace Units.Units
 
         public bool TryAcceptPoint(GameObject point)
         {
-            destinationRandomized = false;
+            _destinationRandomized = false;
             return _navMeshAgent.SetDestination(point.transform.position);
         }
 
         private void RandomizeAgentDestinations()
         {
-            if (_navMeshAgent.hasPath && destinationRandomized == false && _navMeshAgent.remainingDistance < _distanceToGroup)
+            if (_navMeshAgent.hasPath && _destinationRandomized == false && _navMeshAgent.remainingDistance < _distanceToGroup)
             {
                 _navMeshAgent.SetDestination(transform.position + Random.insideUnitSphere * _distanceToGroup);
-                destinationRandomized = true;
+                _destinationRandomized = true;
             }
         }
     }

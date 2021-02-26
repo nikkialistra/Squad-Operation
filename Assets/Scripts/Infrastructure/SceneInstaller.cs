@@ -1,8 +1,9 @@
+using Infrastructure.Signals;
 using Units.Services;
 using UnityEngine;
-using Zenject.Signals;
+using Zenject;
 
-namespace Zenject
+namespace Infrastructure
 {
     public class SceneInstaller : MonoInstaller
     {

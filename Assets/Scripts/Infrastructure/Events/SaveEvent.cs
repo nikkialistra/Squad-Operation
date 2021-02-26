@@ -1,11 +1,12 @@
-﻿﻿using UnityEngine;
+﻿using Infrastructure.Signals;
+using UnityEngine;
 using UnityEngine.UI;
-using Zenject.Signals;
+using Zenject;
 
-namespace Zenject.Events
+namespace Infrastructure.Events
 {
     [RequireComponent(typeof(Button))]
-    public class LoadEvent : MonoBehaviour
+    public class SaveEvent : MonoBehaviour
     { 
         private Button _button;
 
@@ -24,17 +25,17 @@ namespace Zenject.Events
 
         private void OnEnable()
         {
-            _button.onClick.AddListener(Load);
+            _button.onClick.AddListener(Save);
         }
         
         private void OnDisable()
         {
-            _button.onClick.RemoveListener(Load);
+            _button.onClick.RemoveListener(Save);
         }
 
-        private void Load()
+        private void Save()
         {
-            _signalBus.Fire<LoadSignal>();
+            _signalBus.Fire<SaveSignal>();
         }
     }
 }

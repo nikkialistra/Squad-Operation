@@ -1,4 +1,4 @@
-﻿namespace Zenject.Signals
+﻿namespace Infrastructure.Signals
 {
     public class SaveSignal
     {

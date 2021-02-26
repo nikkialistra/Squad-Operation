@@ -1,11 +1,18 @@
 ﻿using UnityEngine;
+using Zenject;
 
 namespace Units.Units
 {
     public class Unit : MonoBehaviour, ISelectable
     {
-        [SerializeField] private GameObject _selectionIndicator;
+        private GameObject _selectionIndicator;
 
+        [Inject]
+        public void Construct(GameObject selectionIndicator)
+        {
+            _selectionIndicator = selectionIndicator;
+        }
+        
         public GameObject GameObject => gameObject;
 
         public void OnSelect()
