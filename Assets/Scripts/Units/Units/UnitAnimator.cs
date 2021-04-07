@@ -18,10 +18,7 @@ namespace Units.Units
             _navMeshAgent = GetComponent<NavMeshAgent>();
         }
 
-        private void Update()
-        {
-            SetAnimatorVelocity();
-        }
+        private void Update() => SetAnimatorVelocity();
 
         private void SetAnimatorVelocity()
         {

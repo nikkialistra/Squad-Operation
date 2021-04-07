@@ -20,10 +20,7 @@ namespace Saving.Entities
             _unitData.Type = _unitType;
         }
 
-        public void DestroySelf()
-        {
-            Destroy(gameObject);
-        }
+        public void DestroySelf() => Destroy(gameObject);
 
         public UnitData GetUnitData()
         {

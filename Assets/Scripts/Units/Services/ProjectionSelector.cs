@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Units.Services;
 using Units.Units;
 using UnityEngine;
 
-namespace Units.Selectors
+namespace Units.Services
 {
-    public class ProjectionSelector : ISelector
+    public class ProjectionSelector
     {
         private readonly UnitRepository _unitRepository;
         private readonly Camera _camera;

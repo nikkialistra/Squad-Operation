@@ -14,11 +14,8 @@ namespace Units.Services
         private readonly Dictionary<GameObject, List<ITargetable>> _links = new Dictionary<GameObject, List<ITargetable>>();
         
         [Inject]
-        public void Construct(GameObject template)
-        {
-            _template = template;
-        }
-        
+        public void Construct(GameObject template) => _template = template;
+
         public GameObject PlaceTo(Vector3 coordinate)
         {
             var target = GetFromPullOrCreate();
@@ -52,9 +49,7 @@ namespace Units.Services
         private GameObject GetFromPullOrCreate()
         {
             foreach (var target in _links.Keys.Where(target => !_links[target].Any()))
-            {
                 return target;
-            }
 
             return CreateNew();
         }
@@ -72,9 +67,7 @@ namespace Units.Services
         private void OffAllWithoutLinks()
         {
             foreach (var point in _links.Keys.Where(point => !_links[point].Any()))
-            {
                 point.gameObject.SetActive(false);
-            }
         }
     }
 }

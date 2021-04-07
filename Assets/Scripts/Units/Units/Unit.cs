@@ -8,21 +8,12 @@ namespace Units.Units
         private GameObject _selectionIndicator;
 
         [Inject]
-        public void Construct(GameObject selectionIndicator)
-        {
-            _selectionIndicator = selectionIndicator;
-        }
-        
+        public void Construct(GameObject selectionIndicator) => _selectionIndicator = selectionIndicator;
+
         public GameObject GameObject => gameObject;
 
-        public void OnSelect()
-        {
-            _selectionIndicator.SetActive(true);
-        }
+        public void OnSelect() => _selectionIndicator.SetActive(true);
 
-        public void OnDeselect()
-        {
-            _selectionIndicator.SetActive(false);
-        }
+        public void OnDeselect() => _selectionIndicator.SetActive(false);
     }
 }

@@ -40,7 +40,7 @@ namespace Saving
             {
                 var unit = Instantiate(_unitPrefab, _unitRoot);
 
-                var unitHandler = unit.GetComponent<UnitHandler>();
+                var unitHandler = unit.GetComponentInChildren<UnitHandler>();
 
                 unitHandler.SetUnitData(unitData);
             }

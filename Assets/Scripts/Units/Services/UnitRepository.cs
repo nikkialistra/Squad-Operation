@@ -8,14 +8,8 @@ namespace Units.Services
     {
         private IEnumerable<Unit> _gameObjects;
 
-        public IEnumerable<Unit> GetObjects()
-        {
-            return _gameObjects ??= FindObjectsOfType<Unit>();
-        }
+        public IEnumerable<Unit> GetObjects() => _gameObjects ??= FindObjectsOfType<Unit>();
 
-        public void ResetObjects()
-        {
-            _gameObjects = null;
-        }
+        public void ResetObjects() => _gameObjects = null;
     }
 }

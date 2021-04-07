@@ -55,10 +55,7 @@ namespace Infrastructure
             Container.BindSignal<LoadSignal>().ToMethod<SaveLoadManager>(x => x.LoadGame).FromResolve();
         }
 
-        private void BindSaveSignal()
-        {
-            Container.BindSignal<SaveSignal>().ToMethod<SaveLoadManager>(x => x.SaveGame).FromResolve();
-        }
+        private void BindSaveSignal() => Container.BindSignal<SaveSignal>().ToMethod<SaveLoadManager>(x => x.SaveGame).FromResolve();
 
         private void BindUnits()
         {

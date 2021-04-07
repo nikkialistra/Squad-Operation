@@ -17,11 +17,8 @@ namespace Units.Services
         
         private Coroutine _areaUpdateCourotine;
 
-        private void Awake()
-        {
-            _control = new Control();
-        }
-        
+        private void Awake() => _control = new Control();
+
         private void OnEnable()
         {
             _control.Enable();

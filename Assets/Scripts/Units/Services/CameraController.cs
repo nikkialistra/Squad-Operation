@@ -130,15 +130,9 @@ namespace Units.Services
             }
         }
 
-        private void ResetFollow(InputAction.CallbackContext context)
-        {
-            _followTransform = null;
-        }
+        private void ResetFollow(InputAction.CallbackContext context) => _followTransform = null;
 
-        private void Scroll(InputAction.CallbackContext context)
-        {
-            _newZoom += _zoomAmount * (context.ReadValue<Vector2>().y * _zoomMultiplier);
-        }
+        private void Scroll(InputAction.CallbackContext context) => _newZoom += _zoomAmount * (context.ReadValue<Vector2>().y * _zoomMultiplier);
 
         private void DragStart(InputAction.CallbackContext context)
         {
@@ -206,15 +200,9 @@ namespace Units.Services
             _newRotation *= Quaternion.Euler(Vector3.up * (difference.x * -_touchRotationMultiplier));
         }
 
-        private void FastMovementOn(InputAction.CallbackContext context)
-        {
-            _movementSpeed = _movementFastSpeed;
-        }
+        private void FastMovementOn(InputAction.CallbackContext context) => _movementSpeed = _movementFastSpeed;
 
-        private void FastMovementOff(InputAction.CallbackContext context)
-        {
-            _movementSpeed = _movementNormalSpeed;
-        }
+        private void FastMovementOff(InputAction.CallbackContext context) => _movementSpeed = _movementNormalSpeed;
 
         private void MovementStart(InputAction.CallbackContext context)
         {

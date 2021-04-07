@@ -1,4 +1,3 @@
-using Units.Selectors;
 using Units.Services;
 using Units.Units;
 using UnityEngine;
@@ -11,9 +10,6 @@ namespace Infrastructure
         [Header("Selection")] 
         [SerializeField] private SelectingInput _selectingInput;
 
-        [Header("Selector (projection by default)")]
-        [SerializeField] private bool _usePhysics3DSelector;
-        
         [SerializeField] private RectTransform _selectionRect;
         [SerializeField] private Canvas _uiCanvas;
         
@@ -26,11 +22,12 @@ namespace Infrastructure
         public override void InstallBindings()
         {
             BindUnitSelectionSystem();
-            BindUnitSelector();
+            
+            Container.Bind<ProjectionSelector>().AsSingle();
             
             Container.BindInstance(_movementCommand);
 
-            BindUnit();
+            //BindUnit();
         }
 
         private void BindUnitSelectionSystem()
@@ -38,14 +35,6 @@ namespace Infrastructure
             Container.BindInterfacesAndSelfTo<UnitSelection>().AsSingle().NonLazy();
             Container.BindInstance(_selectingInput);
             Container.Bind<UiDrawer>().AsSingle().WithArguments(_selectionRect, _uiCanvas);
-        }
-
-        private void BindUnitSelector()
-        {
-            if (_usePhysics3DSelector)
-                Container.Bind<ISelector>().To<Physics3DSelector>().AsSingle();
-            else
-                Container.Bind<ISelector>().To<ProjectionSelector>().AsSingle();
         }
 
         private void BindUnit()
@@ -58,9 +47,6 @@ namespace Infrastructure
             Container.BindInterfacesTo<UnitGenerator>().AsSingle();
         }
 
-        private void InstallUnitFacade(DiContainer subContainer)
-        {
-            subContainer.Bind<UnitFacade>().AsSingle();
-        }
+        private void InstallUnitFacade(DiContainer subContainer) => subContainer.Bind<UnitFacade>().AsSingle();
     }
 }

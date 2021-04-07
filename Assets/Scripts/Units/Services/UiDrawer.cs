@@ -24,9 +24,6 @@ namespace Units.Services
             _selectionRect.sizeDelta = rect.size / _uiCanvas.scaleFactor;
         }
 
-        public void StopDrawing()
-        {
-            _selectionGameObject.SetActive(false);
-        }
+        public void StopDrawing() => _selectionGameObject.SetActive(false);
     }
 }

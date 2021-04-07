@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Units.Selectors;
 using Units.Units;
 using UnityEngine;
 using Zenject;
@@ -9,14 +8,14 @@ namespace Units.Services
 {
     public class UnitSelection : IInitializable
     {
-        private ISelector _selector;
+        private ProjectionSelector _selector;
         private SelectingInput _selectingInput;
         private UiDrawer _selectingAreaDrawer;
         
         public IEnumerable<ISelectable> Selected { get; private set; } = new ISelectable[0];
         
         [Inject]
-        public void Construct(ISelector selector, SelectingInput selectingInput, UiDrawer selectingAreaDrawer)
+        public void Construct(ProjectionSelector selector, SelectingInput selectingInput, UiDrawer selectingAreaDrawer)
         {
             _selector = selector;
             _selectingInput = selectingInput;
@@ -29,10 +28,7 @@ namespace Units.Services
             _selectingInput.SelectingEnded += OnSelectingEnded;
         }
 
-        private void OnSelecting(Rect rect)
-        {
-            _selectingAreaDrawer.Draw(rect);
-        }
+        private void OnSelecting(Rect rect) => _selectingAreaDrawer.Draw(rect);
 
         private void OnSelectingEnded(Rect rect)
         {
@@ -42,14 +38,10 @@ namespace Units.Services
 
             var newSelectedArray = newSelected as ISelectable[] ?? newSelected.ToArray();
             foreach (var willDeselect in Selected.Except(newSelectedArray))
-            {
                 willDeselect.OnDeselect();
-            }
 
             foreach (var selected in newSelectedArray)
-            {
                 selected.OnSelect();
-            }
 
             Selected = newSelectedArray;
 

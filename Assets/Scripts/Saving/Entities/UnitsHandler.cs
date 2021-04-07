@@ -6,10 +6,8 @@ namespace Saving.Entities
     {
         public void DestroyUnits()
         {
-            foreach (var unitHandler in FindObjectsOfType<UnitHandler>())
-            {
+            foreach (var unitHandler in FindObjectsOfType<UnitHandler>()) 
                 unitHandler.DestroySelf();
-            }
         }
     }
 }

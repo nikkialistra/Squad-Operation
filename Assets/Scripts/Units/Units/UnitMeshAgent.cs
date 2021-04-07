@@ -14,20 +14,11 @@ namespace Units.Units
         private bool _destinationRandomized = false;
         
         [Inject]
-        public void Construct(float distanceToGroup)
-        {
-            _distanceToGroup = distanceToGroup;
-        }
+        public void Construct(float distanceToGroup) => _distanceToGroup = distanceToGroup;
 
-        private void Awake()
-        {
-            _navMeshAgent = GetComponent<NavMeshAgent>();
-        }
+        private void Awake() => _navMeshAgent = GetComponent<NavMeshAgent>();
 
-        private void Update()
-        {
-            RandomizeAgentDestinations();
-        }
+        private void Update() => RandomizeAgentDestinations();
 
         public bool TryAcceptPoint(GameObject point)
         {
