@@ -12,7 +12,13 @@ namespace Units.Units
 
         public GameObject GameObject => gameObject;
 
-        public void OnSelect() => _selectionIndicator.SetActive(true);
+        public void OnSelect()
+        {
+            if (_selectionIndicator == null)
+                return;
+            
+            _selectionIndicator.SetActive(true);
+        }
 
         public void OnDeselect() => _selectionIndicator.SetActive(false);
     }
